@@ -1,0 +1,843 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Warm archival paper — the curator's chosen ground */
+    --bg: #F0EDE6;
+    --text: #15140F;
+    --accent: #A6865E;
+    --accent-light: #C4A882;
+    --accent-dark: #8B6F4A;
+    --muted: #877F73;
+    --border: #D9D3C6;
+    --surface: #E8E4DA;
+    --surface-dark: #E0DBCF;
+
+    /* Conservation / restricted tones */
+    --ink: #100F0B;
+    --ink-2: #18160F;
+    --ink-3: #211E16;
+    --paper: #EFEBE1;
+    --classified: #8B1A1A;
+    --classified-light: #B33A2B;
+    --bg-rgb: 240, 237, 230;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .bg-surface {
+    background-color: var(--surface);
+  }
+
+  .border-subtle {
+    border-color: var(--border);
+  }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Delay utilities */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
+  .delay-600 { transition-delay: 600ms; }
+
+  /* Line clamp */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Custom cursor */
+.cursor-accent {
+  cursor: crosshair;
+}
+
+/* Terminal styles */
+.terminal-text {
+  font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.terminal-prompt::before {
+  content: '> ';
+  color: var(--accent);
+}
+
+/* Dossier / Classified styles */
+.classified-stamp {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* Horizontal rule decorative */
+.hr-accent {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+}
+
+/* Number display */
+.num-display {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Image overlay */
+.img-reveal {
+  overflow: hidden;
+}
+
+.img-reveal img {
+  transform: scale(1.05);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-reveal.visible img {
+  transform: scale(1);
+}
+
+/* Noise texture overlay */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
+/* Global noise background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  pointer-events: none;
+  z-index: 9999;
+  /* No mix-blend-mode here: a fixed, full-viewport blended layer forces the
+     browser to recomposite the entire page on every scroll frame — the main
+     cause of "heavy" scrolling. A plain low-opacity grain reads the same. */
+  opacity: 0.5;
+}
+
+/* Lab section darker bg */
+.lab-bg {
+  background-color: #1A1916;
+  color: #F4F2ED;
+}
+
+/* Process number big */
+.process-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 800;
+  line-height: 0.85;
+  color: var(--accent);
+  opacity: 0.15;
+  position: absolute;
+  top: -0.2em;
+  left: -0.1em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Navigation */
+nav a {
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* Section label */
+.section-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Expand button */
+.expand-btn {
+  border: 1px solid rgba(166, 134, 94, 0.3);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.expand-btn:hover {
+  border-color: var(--accent);
+  background-color: rgba(166, 134, 94, 0.08);
+}
+
+/* Terminal window */
+.terminal-window {
+  background: #0E0E0D;
+  border: 1px solid rgba(166, 134, 94, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.terminal-bar {
+  background: #1C1B18;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px 12px 0 0;
+}
+
+/* Dossier modal */
+.dossier-modal {
+  background: #F4F2ED;
+  border: 1px solid var(--border);
+  box-shadow: 0 40px 120px rgba(22, 22, 22, 0.25);
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1.1s step-end infinite;
+}
+
+/* Fade in up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hero subtitle letters */
+@keyframes letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Lab item expand */
+.lab-item-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lab-item-content.expanded {
+  max-height: 400px;
+}
+
+/* Contact gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Archive project hover */
+.project-image-wrap {
+  overflow: hidden;
+}
+
+.project-image-wrap img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-image-wrap:hover img {
+  transform: scale(1.03);
+}
+
+/* Thin divider line */
+.divider-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border);
+}
+
+/* Pill badge */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: transparent;
+}
+
+/* Classified bar */
+.classified-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8B1A1A;
+}
+
+.classified-bar::before,
+.classified-bar::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: #8B1A1A;
+  opacity: 0.4;
+}
+
+/* Scrollbar for terminal */
+.terminal-output {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(166, 134, 94, 0.3) transparent;
+}
+
+.terminal-output::-webkit-scrollbar {
+  width: 4px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+  background: rgba(166, 134, 94, 0.3);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   CYBERPUNK GLITCH — the wordmark, briefly possessed by signal
+   ============================================================ */
+.glitch-name {
+  position: relative;
+  isolation: isolate;
+}
+
+.glitch-name::before,
+.glitch-name::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  /* inherit type metrics from the heading so layers align */
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  will-change: transform, clip-path, opacity;
+}
+
+/* cyan channel */
+.glitch-name::before {
+  color: #00b8c4;
+  animation: glitchCyan 7s steps(1) infinite;
+}
+
+/* magenta channel */
+.glitch-name::after {
+  color: #e0006a;
+  animation: glitchMagenta 7s steps(1) infinite;
+}
+
+@keyframes glitchCyan {
+  0%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  86% { opacity: 0; clip-path: inset(0 0 100% 0); }
+  87% { opacity: 0.85; transform: translate(-4px, 1px); clip-path: inset(8% 0 64% 0); }
+  89% { opacity: 0.7; transform: translate(3px, -1px); clip-path: inset(54% 0 28% 0); }
+  91% { opacity: 0.85; transform: translate(-3px, 0); clip-path: inset(34% 0 46% 0); }
+  93% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes glitchMagenta {
+  0%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+  86% { opacity: 0; clip-path: inset(0 0 100% 0); }
+  87.5% { opacity: 0.8; transform: translate(4px, -1px); clip-path: inset(20% 0 50% 0); }
+  89.5% { opacity: 0.65; transform: translate(-3px, 1px); clip-path: inset(70% 0 12% 0); }
+  91.5% { opacity: 0.8; transform: translate(3px, 0); clip-path: inset(44% 0 38% 0); }
+  93% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 100% 0); }
+}
+
+/* a faint base aberration, always alive */
+.glitch-name {
+  text-shadow:
+    0.5px 0 0 rgba(0, 184, 196, 0.18),
+    -0.5px 0 0 rgba(224, 0, 106, 0.16);
+}
+
+/* deliberate inspection — hover holds the signal open */
+.glitch-name:hover::before {
+  animation: glitchCyanHover 0.45s steps(2) infinite;
+  opacity: 0.85;
+}
+.glitch-name:hover::after {
+  animation: glitchMagentaHover 0.45s steps(2) infinite;
+  opacity: 0.8;
+}
+
+@keyframes glitchCyanHover {
+  0% { transform: translate(-4px, 1px); clip-path: inset(12% 0 58% 0); }
+  50% { transform: translate(3px, -1px); clip-path: inset(48% 0 30% 0); }
+  100% { transform: translate(-2px, 1px); clip-path: inset(72% 0 8% 0); }
+}
+@keyframes glitchMagentaHover {
+  0% { transform: translate(4px, -1px); clip-path: inset(30% 0 44% 0); }
+  50% { transform: translate(-3px, 1px); clip-path: inset(66% 0 14% 0); }
+  100% { transform: translate(3px, 0); clip-path: inset(6% 0 66% 0); }
+}
+
+/* faint scan flicker on the glyph itself during bursts */
+@keyframes glitchSkew {
+  0%, 100% { transform: skewX(0deg); }
+  92% { transform: skewX(0deg); }
+  92.6% { transform: skewX(-1.4deg); }
+  93.2% { transform: skewX(1deg); }
+  94% { transform: skewX(0deg); }
+}
+.glitch-name {
+  animation: glitchSkew 7s ease-in-out infinite;
+}
+
+/* ============================================================
+   THE VAULT — restricted pharmaceutical collection
+   ============================================================ */
+.vault {
+  background-color: var(--ink);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+
+/* faint vault grid + scanlines, layered */
+.vault::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(166, 134, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(166, 134, 94, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.vault-scanlines {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.25) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  z-index: 2;
+}
+
+/* hazard / clearance stripe */
+.hazard-stripe {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(166, 134, 94, 0.9) 0px,
+    rgba(166, 134, 94, 0.9) 14px,
+    rgba(16, 15, 11, 0.9) 14px,
+    rgba(16, 15, 11, 0.9) 28px
+  );
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+/* classified stamp — rotated wax-ink mark */
+.stamp {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--classified-light);
+  border: 1.5px solid var(--classified-light);
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 9px;
+  display: inline-block;
+  opacity: 0.85;
+  transform: rotate(-7deg);
+  mix-blend-mode: screen;
+}
+
+/* the specimen plate — a conserved document under glass */
+.vault-card {
+  position: relative;
+  background: linear-gradient(160deg, var(--ink-2), var(--ink));
+  border: 1px solid rgba(166, 134, 94, 0.18);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s ease,
+              box-shadow 0.6s ease;
+}
+
+.vault-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(166, 134, 94, 0.55);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8),
+              0 0 0 1px rgba(166, 134, 94, 0.25),
+              0 0 40px -20px rgba(166, 134, 94, 0.4);
+}
+
+/* registration corner marks */
+.vault-card .reg-mark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(166, 134, 94, 0.4);
+  pointer-events: none;
+  transition: border-color 0.5s ease;
+}
+.vault-card:hover .reg-mark { border-color: rgba(166, 134, 94, 0.85); }
+
+/* redaction bars dissolve when the file is inspected */
+.redaction {
+  background: #0c0b08;
+  transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  clip-path: inset(0 0 0 0);
+}
+.vault-card:hover .redaction {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+/* a scanning line that sweeps the specimen on hover */
+.vault-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  top: 0;
+  background: linear-gradient(90deg, transparent, rgba(166, 134, 94, 0.9), transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+.vault-card:hover .vault-scan {
+  animation: vaultScan 1.6s ease-in-out infinite;
+  opacity: 1;
+}
+@keyframes vaultScan {
+  0% { top: 0%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* faux document lines for the specimen mock */
+.doc-line {
+  height: 5px;
+  border-radius: 1px;
+  background: rgba(239, 235, 225, 0.16);
+}
+
+/* blinking record dot */
+@keyframes recBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+}
+.rec-dot { animation: recBlink 1.4s step-end infinite; }
+
+/* ============================================================
+   TIMELINE OF TRUST — provenance, not a résumé
+   ============================================================ */
+.trust-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent,
+    var(--border) 6%,
+    var(--border) 94%,
+    transparent);
+}
+
+.trust-node {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+}
+.trust-node::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.5s ease;
+}
+.trust-item:hover .trust-node {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 6px rgba(166, 134, 94, 0.1);
+}
+.trust-item:hover .trust-node::after { transform: scale(1.3); }
+
+.trust-plaque {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 4px;
+  transition: border-color 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease;
+}
+.trust-item:hover .trust-plaque {
+  border-color: var(--accent);
+  background: var(--bg);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   SCROLL & MOTION POLISH
+   ============================================================ */
+html.has-smooth-scroll {
+  scroll-behavior: auto; /* JS drives the wheel; keep native anchor jumps crisp */
+}
+
+/* honor reduced-motion across the board */
+@media (prefers-reduced-motion: reduce) {
+  .glitch-name::before,
+  .glitch-name::after { animation: none !important; opacity: 0 !important; }
+  .glitch-name { animation: none !important; text-shadow: none !important; }
+  .vault-card:hover .vault-scan { animation: none; }
+  .rec-dot { animation: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* ============================================================
+   ADMIN OVERRIDES — toggled by the Control Room (Alt+A)
+   ============================================================ */
+html.cfg-no-glitch .glitch-name::before,
+html.cfg-no-glitch .glitch-name::after { animation: none !important; opacity: 0 !important; }
+html.cfg-no-glitch .glitch-name { animation: none !important; text-shadow: none !important; }
+
+html.cfg-no-grain body::before { content: none !important; }
+
+html.cfg-no-scanlines .vault-scanlines { display: none !important; }
+
+html.cfg-no-reveal .reveal,
+html.cfg-no-reveal .reveal-left,
+html.cfg-no-reveal .reveal-right,
+html.cfg-no-reveal .reveal-scale,
+html.cfg-no-reveal .img-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+html.cfg-no-reveal .img-reveal img { transform: none !important; }
+
+/* ============================================================
+   ADMIN PANEL CONTROLS
+   ============================================================ */
+.adm-scroll { scrollbar-width: thin; scrollbar-color: rgba(166,134,94,0.35) transparent; }
+.adm-scroll::-webkit-scrollbar { width: 6px; }
+.adm-scroll::-webkit-scrollbar-thumb { background: rgba(166,134,94,0.35); border-radius: 3px; }
+.adm-scroll::-webkit-scrollbar-track { background: transparent; }
+
+.adm-switch {
+  position: relative;
+  width: 38px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.adm-switch input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+.adm-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(239, 235, 225, 0.14);
+  border: 1px solid rgba(239, 235, 225, 0.12);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.adm-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(239, 235, 225, 0.55);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
+}
+.adm-switch input:checked ~ .adm-track {
+  background: var(--accent, #A6865E);
+  border-color: var(--accent, #A6865E);
+}
+.adm-switch input:checked ~ .adm-thumb {
+  transform: translateX(18px);
+  background: #100F0B;
+}
+
+.adm-color {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(166, 134, 94, 0.3);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+.adm-color::-webkit-color-swatch-wrapper { padding: 2px; }
+.adm-color::-webkit-color-swatch { border: none; border-radius: 2px; }
