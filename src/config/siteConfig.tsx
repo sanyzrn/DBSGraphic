@@ -56,8 +56,8 @@ export const DEFAULT_CONFIG: SiteConfig = {
   sections: {
     ticker: true,
     introStats: true,
-    vault: true,
-    archive: true,
+    vault: false,
+    archive: false,
     lab: true,
     process: true,
     timeline: true,
