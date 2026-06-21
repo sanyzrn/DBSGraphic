@@ -72,9 +72,9 @@ export const DEFAULT_CONFIG: SiteConfig = {
   hero: {
     name: 'SAEED',
     tagline: 'DESIGNING TRUST',
-    year: 'SINCE 2009',
+    year: 'SINCE 2007',
     descriptor:
-      'Senior designer with 16+ years of experience who learned to build systems — not the other way around.',
+      'Graphic designer with 16+ years mastering pharmaceutical packaging, brand systems, and web interfaces — from first sketch to production-ready.',
   },
   vault: {
     clearance: 'Restricted Access · Clearance Required',

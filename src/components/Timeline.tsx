@@ -16,39 +16,39 @@ interface Milestone {
 
 const milestones: Milestone[] = [
   {
-    era: '2009',
-    title: 'The First Signature',
-    body: 'A pharmaceutical founder handed over an entire product line on nothing but a handshake — trust extended before there was a portfolio to justify it.',
+    era: '2007',
+    title: 'The First Commission',
+    body: 'First professional design work at Taranom Advertising. The discipline of client deadlines and commercial expectations forged a standard that has not been lowered since.',
     marker: 'I',
   },
   {
-    era: '2013',
-    title: 'Approved, Untouched',
-    body: 'A regulatory reviewer returned a label system without a single correction. The rarest compliment in medicine is silence.',
+    era: '2009',
+    title: 'Seven Years of Editorial Mastery',
+    body: 'A seven-year residency at Payam Magazine built deep expertise in layout systems, typographic precision, and the patience required to design for print at scale — every issue a deadline, every page a system.',
     marker: 'II',
   },
   {
-    era: '2016',
-    title: 'The Box They Kept',
-    body: 'Packaging meant to be discarded became something patients did not want to throw away. A ritual formed around an object designed to be thrown out.',
+    era: '2017',
+    title: 'Entering the Pharmaceutical World',
+    body: 'A four-year remote partnership with Kimia Kala Razi marked the beginning of pharmaceutical specialization — a domain where a misplaced element carries regulatory and patient consequence.',
     marker: 'III',
   },
   {
-    era: '2019',
-    title: 'Trusted with the Invisible',
-    body: 'Invited to design the systems no patient would ever see, yet every patient would depend on — the quiet machinery beneath the care.',
+    era: '2021',
+    title: 'The Year of Simultaneous Trust',
+    body: 'In a single year: GPL, Yas Pharmed, Ovedis, and Zarjam Daru each extended trust concurrently. Four pharmaceutical clients. One independent designer. Zero compromises on standard.',
     marker: 'IV',
   },
   {
-    era: '2022',
-    title: 'Two Hundred, Zero Recalled',
-    body: 'The two-hundredth delivered project. None recalled. None reprinted for error. A clean record, kept on purpose — not by luck.',
+    era: '2021',
+    title: 'A Remote Partnership Built to Last',
+    body: 'The collaboration with Busun Pharmed began in 2021 and continues today — a remote relationship sustained not by proximity, but by consistent delivery across every project.',
     marker: 'V',
   },
   {
-    era: '2025',
-    title: 'Cited as the Standard',
-    body: 'Competitors began referencing the work as the benchmark for medical trust. The quietest form of authority is being copied carefully.',
+    era: '2023',
+    title: 'Current Chapter: Nafas Pharmed',
+    body: 'Ongoing work with Nafas Pharmed and Busun Pharmed simultaneously — pharmaceutical packaging that meets industry standards while maintaining the visual discipline that defines every piece leaving this studio.',
     marker: 'VI',
   },
 ];
@@ -258,8 +258,8 @@ export default function Timeline() {
             maxWidth: '340px',
           }}
         >
-          Not a résumé. Not a career history. A record of the moments trust was placed —
-          and the discipline of keeping it.
+          Not a résumé. A record of the organizations that placed their brand in these hands —
+          and the discipline that kept every one of them.
         </p>
       </div>
 

@@ -6,53 +6,53 @@ interface LabProps {
 
 const capabilities = [
   {
-    id: 'wordpress',
+    id: 'packaging',
     index: '01',
-    title: 'WordPress Systems',
-    short: 'Custom development beyond templates.',
+    title: 'Pharmaceutical Packaging',
+    short: 'Where precision meets patient care.',
     detail:
-      'Custom theme architecture, advanced custom fields, WooCommerce integrations, performance optimization, and multi-site management. Built as systems, not websites.',
-    specs: ['Custom Theme Dev', 'ACF Architecture', 'WooCommerce', 'Performance', 'Multisite'],
+      'Sixteen years of pharmaceutical and cosmetic packaging — from conceptual layout to print-ready production files. Drug labeling, cosmetic boxes, insert design, and multi-SKU systems built in Adobe Illustrator and Photoshop. Every element justified. Every specification met.',
+    specs: ['Drug Labeling', 'Cosmetic Packaging', 'Insert Design', 'Multi-SKU Systems', 'Print Production'],
     icon: '⬡',
   },
   {
-    id: 'ai',
+    id: 'identity',
     index: '02',
-    title: 'AI Solutions',
-    short: 'Practical intelligence, not buzzwords.',
+    title: 'Visual Identity & Brand Systems',
+    short: 'Brands that carry weight without explanation.',
     detail:
-      'Integrating LLMs, computer vision, and AI APIs into business workflows. Chatbots with real context, automated content systems, intelligent classification tools — built to solve actual problems.',
-    specs: ['LLM Integration', 'OpenAI API', 'Workflow AI', 'Classification', 'Content Systems'],
+      'Comprehensive graphic design and branding work spanning logo development, brand guidelines, marketing materials, and digital content. Building visual languages — not just logos — that scale from business card to billboard and remain coherent across every application.',
+    specs: ['Logo Design', 'Brand Guidelines', 'Art Direction', 'Print Materials', 'Visual Systems'],
     icon: '◈',
   },
   {
-    id: 'telegram',
+    id: 'web',
     index: '03',
-    title: 'Telegram Bots',
-    short: 'Channel your operations through Telegram.',
+    title: 'WordPress & Web Development',
+    short: 'Websites built to work, not just look good.',
     detail:
-      'Full-featured Telegram bots for customer service, order management, team notifications, content delivery, and business automation. Your business in the most-used app your clients already have.',
-    specs: ['Bot API', 'Webhooks', 'Payment Systems', 'CRM Integration', 'Team Bots'],
+      'Full website design and development using WordPress, HTML, and CSS. From initial concept to launch — custom-built, brand-aligned, performance-optimized. No themes used out of the box. Every site purpose-built for its audience and objective.',
+    specs: ['Custom WordPress', 'HTML / CSS', 'Web Design', 'Performance', 'Brand Integration'],
     icon: '▲',
   },
   {
-    id: 'automation',
+    id: 'ui',
     index: '04',
-    title: 'Business Automation',
-    short: 'Systems that work while you sleep.',
+    title: 'UI/UX Design',
+    short: 'Interfaces people actually want to use.',
     detail:
-      'End-to-end workflow automation using modern integration platforms. Connecting CRMs, ERPs, e-commerce platforms, email systems, and databases into unified automated pipelines.',
-    specs: ['Workflow Design', 'API Integration', 'Zapier/Make', 'Database Sync', 'Reporting'],
+      'User interface design for web and applications using Figma and Adobe XD. Focus on intuitive navigation, clear visual hierarchy, and seamless user experience. Design that bridges aesthetics and function — prototype-tested before a single line of code is written.',
+    specs: ['Figma', 'Adobe XD', 'Prototyping', 'User Flows', 'Interface Systems'],
     icon: '◎',
   },
   {
-    id: 'web',
+    id: 'editorial',
     index: '05',
-    title: 'Web Applications',
-    short: 'Full-stack products with real architecture.',
+    title: 'Catalog & Editorial Design',
+    short: 'Print that earns shelf space.',
     detail:
-      'Design-led web applications with a strong focus on UX integrity and system thinking. From concept through deployment — designed for users, built for scale.',
-    specs: ['React', 'Full-Stack', 'API Design', 'UX Architecture', 'Deployment'],
+      'From concept to final print-ready file — product catalogs, corporate brochures, and editorial pieces designed in Adobe InDesign. Structured layout systems, precision typography, and production files that printers do not have to correct. Seven years of editorial experience at Payam Magazine.',
+    specs: ['Catalog Design', 'Brochure Layout', 'Adobe InDesign', 'Print Production', 'Art Direction'],
     icon: '□',
   },
 ];
@@ -171,7 +171,7 @@ export default function Lab({ onLabVisited }: LabProps) {
               marginBottom: '16px',
             }}
           >
-            Most designers stop at mockups.
+            Most designers deliver files.
           </p>
           <p
             style={{
@@ -182,7 +182,7 @@ export default function Lab({ onLabVisited }: LabProps) {
               color: '#F4F2ED',
             }}
           >
-            I build the system too.
+            I deliver systems.
           </p>
         </div>
       </div>

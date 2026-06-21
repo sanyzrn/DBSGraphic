@@ -7,15 +7,16 @@ interface DossierModalProps {
 
 const profileData = [
   { label: 'Status', value: 'Active', highlight: true },
-  { label: 'Classification', value: 'Creative Director / Senior Designer' },
-  { label: 'Years Active', value: '16+ Years (Est. 2009)' },
+  { label: 'Full Name', value: 'Saeed Zarrini' },
+  { label: 'Classification', value: 'Senior Graphic Designer · Packaging Specialist' },
+  { label: 'Years Active', value: '16+ Years (Est. 2007)' },
   { label: 'Primary Discipline', value: 'Pharmaceutical Packaging Design' },
-  { label: 'Secondary Discipline', value: 'Brand Identity Systems' },
-  { label: 'Tertiary Discipline', value: 'UI/UX Design' },
-  { label: 'Technical Stack', value: 'WordPress · React · Telegram Bot API · AI Systems' },
-  { label: 'Specialization', value: 'Packaging Specialist' },
-  { label: 'Build Capability', value: 'Full-System Development' },
-  { label: 'Profile ID', value: 'SRD-001-A / CONFIDENTIAL' },
+  { label: 'Secondary Discipline', value: 'Visual Identity & Brand Systems' },
+  { label: 'Tertiary Discipline', value: 'UI/UX Design · Web Development' },
+  { label: 'Design Stack', value: 'Photoshop · Illustrator · Adobe XD · Figma · InDesign' },
+  { label: 'Build Stack', value: 'WordPress · HTML · CSS · JavaScript' },
+  { label: 'Current Clients', value: 'Nafas Pharmed · Busun Pharmed' },
+  { label: 'Profile ID', value: 'SRD-SZ-2007 / CONFIDENTIAL' },
 ];
 
 export default function DossierModal({ isOpen, onClose }: DossierModalProps) {
