@@ -4,6 +4,7 @@ import {
   type SectionKey,
   type SiteConfig,
 } from '../config/siteConfig';
+import { REMOTE_ENABLED } from '../config/remoteConfig';
 
 /* ============================================================
    ADMIN PANEL — the Control Room.
@@ -46,13 +47,19 @@ const PANEL = {
   mut: 'rgba(239,235,225,0.45)',
 };
 
+const ADMIN_PASSWORD = 'dbs@2025';
+
 export default function AdminPanel() {
-  const { config, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, reset } =
+  const { config, remoteSyncStatus, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, publishSections, reset } =
     useSiteConfig();
   const [open, setOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
 
   // Desktop gate — admin is unavailable on touch / narrow screens.
   useEffect(() => {
@@ -65,20 +72,57 @@ export default function AdminPanel() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Alt + A toggles, Esc closes. (KeyA by physical code so layout/Alt-key quirks don't matter.)
+  // Alt + A toggles, Esc closes.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.altKey && e.code === 'KeyA') {
         if (!isDesktop) return;
         e.preventDefault();
-        setOpen((o) => !o);
+        setOpen((o) => {
+          if (o) return false;
+          // Reset auth when reopening
+          setAuthenticated(false);
+          setPasswordInput('');
+          setPasswordError(false);
+          return true;
+        });
       } else if (e.key === 'Escape') {
         setOpen(false);
+        setAuthenticated(false);
+        setPasswordInput('');
+        setPasswordError(false);
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [isDesktop]);
+
+  // Focus password input when panel opens and not authenticated
+  useEffect(() => {
+    if (open && !authenticated) {
+      setTimeout(() => passwordInputRef.current?.focus(), 300);
+    }
+  }, [open, authenticated]);
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === ADMIN_PASSWORD) {
+      setAuthenticated(true);
+      setPasswordError(false);
+      setPasswordInput('');
+    } else {
+      setPasswordError(true);
+      setPasswordInput('');
+      setTimeout(() => setPasswordError(false), 1500);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setAuthenticated(false);
+    setPasswordInput('');
+    setPasswordError(false);
+  };
 
   const exportConfig = () => {
     navigator.clipboard
@@ -98,7 +142,7 @@ export default function AdminPanel() {
     <>
       {/* click-away backdrop */}
       <div
-        onClick={() => setOpen(false)}
+        onClick={handleClose}
         style={{
           position: 'fixed',
           inset: 0,
@@ -159,7 +203,7 @@ export default function AdminPanel() {
             </div>
           </div>
           <button
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
             aria-label="Close"
             style={{
               background: 'none',
@@ -177,8 +221,75 @@ export default function AdminPanel() {
           </button>
         </div>
 
+        {/* Password gate */}
+        {!authenticated && (
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '40px 32px',
+              gap: '24px',
+            }}
+          >
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: '28px',
+                  marginBottom: '12px',
+                  opacity: 0.6,
+                }}
+              >
+                ⬡
+              </div>
+              <div style={{ fontSize: '10px', letterSpacing: '0.28em', color: PANEL.bronze, marginBottom: '6px' }}>
+                ACCESS RESTRICTED
+              </div>
+              <div style={{ fontSize: '8.5px', letterSpacing: '0.12em', color: PANEL.mut }}>
+                Enter control room password
+              </div>
+            </div>
+            <form onSubmit={handlePasswordSubmit} style={{ width: '100%' }}>
+              <input
+                ref={passwordInputRef}
+                type="password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                placeholder="password"
+                autoComplete="off"
+                style={{
+                  width: '100%',
+                  background: PANEL.ink2,
+                  border: `1px solid ${passwordError ? 'rgba(179,58,43,0.8)' : PANEL.line}`,
+                  color: passwordError ? '#B33A2B' : PANEL.paper,
+                  fontFamily: 'inherit',
+                  fontSize: '12px',
+                  padding: '12px 14px',
+                  borderRadius: '4px',
+                  letterSpacing: '0.15em',
+                  outline: 'none',
+                  textAlign: 'center',
+                  transition: 'border-color 0.2s ease, color 0.2s ease',
+                  boxSizing: 'border-box',
+                }}
+              />
+              {passwordError && (
+                <div style={{ fontSize: '8.5px', color: '#B33A2B', letterSpacing: '0.12em', textAlign: 'center', marginTop: '8px' }}>
+                  ACCESS DENIED
+                </div>
+              )}
+              <button type="submit" style={{ display: 'none' }} />
+            </form>
+            <div style={{ fontSize: '8px', color: PANEL.mut, letterSpacing: '0.1em', textAlign: 'center', opacity: 0.6 }}>
+              Press Enter to authenticate
+            </div>
+          </div>
+        )}
+
         {/* Scroll body */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '4px 0 24px' }} className="adm-scroll">
+        {authenticated && <div style={{ flex: 1, overflowY: 'auto', padding: '4px 0 24px' }} className="adm-scroll">
           {/* SECTIONS */}
           <Group title="Sections" meta={`${activeSections}/${SECTIONS.length} active`}>
             {SECTIONS.map((s) => (
@@ -186,6 +297,62 @@ export default function AdminPanel() {
                 <Toggle checked={config.sections[s.key]} onChange={() => toggleSection(s.key)} />
               </Row>
             ))}
+
+            {/* Publish to Web */}
+            <div style={{ padding: '10px 20px 4px' }}>
+              {REMOTE_ENABLED ? (
+                <button
+                  onClick={publishSections}
+                  disabled={remoteSyncStatus === 'publishing' || remoteSyncStatus === 'fetching'}
+                  style={{
+                    width: '100%',
+                    cursor: remoteSyncStatus === 'publishing' ? 'wait' : 'pointer',
+                    background:
+                      remoteSyncStatus === 'published'
+                        ? 'rgba(63,185,80,0.12)'
+                        : remoteSyncStatus === 'error'
+                        ? 'rgba(179,58,43,0.12)'
+                        : 'rgba(166,134,94,0.1)',
+                    border: `1px solid ${
+                      remoteSyncStatus === 'published'
+                        ? 'rgba(63,185,80,0.5)'
+                        : remoteSyncStatus === 'error'
+                        ? 'rgba(179,58,43,0.5)'
+                        : PANEL.bronze
+                    }`,
+                    color:
+                      remoteSyncStatus === 'published'
+                        ? '#3FB950'
+                        : remoteSyncStatus === 'error'
+                        ? '#B33A2B'
+                        : PANEL.bronze,
+                    fontFamily: 'inherit',
+                    fontSize: '9.5px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    padding: '10px 8px',
+                    borderRadius: '3px',
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  {remoteSyncStatus === 'publishing'
+                    ? '⟳  Publishing...'
+                    : remoteSyncStatus === 'fetching'
+                    ? '⟳  Syncing...'
+                    : remoteSyncStatus === 'published'
+                    ? '✓  Published — Live for all visitors'
+                    : remoteSyncStatus === 'error'
+                    ? '✕  Publish failed — retry'
+                    : '↑  Publish Sections to Web'}
+                </button>
+              ) : (
+                <p style={{ fontSize: '8.5px', color: PANEL.mut, letterSpacing: '0.08em', lineHeight: 1.7, margin: 0 }}>
+                  Remote sync not configured. Fill in{' '}
+                  <span style={{ color: PANEL.bronze }}>src/config/remoteConfig.ts</span>{' '}
+                  with JSONBin.io credentials to publish globally.
+                </p>
+              )}
+            </div>
           </Group>
 
           {/* APPEARANCE */}
@@ -273,7 +440,7 @@ export default function AdminPanel() {
               <kbd style={kbd}>Esc</kbd> to close.
             </p>
           </Group>
-        </div>
+        </div>}
 
         {/* Footer status */}
         <div

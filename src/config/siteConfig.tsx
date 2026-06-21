@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { fetchRemoteSections, publishRemoteSections, REMOTE_ENABLED } from './remoteConfig';
 
 /* ============================================================
    SITE CONFIG — the single source of truth the Admin console
@@ -114,14 +115,18 @@ function loadConfig(): SiteConfig {
   }
 }
 
+export type RemoteSyncStatus = 'idle' | 'fetching' | 'publishing' | 'published' | 'error';
+
 interface SiteConfigContextValue {
   config: SiteConfig;
+  remoteSyncStatus: RemoteSyncStatus;
   toggleSection: (key: SectionKey) => void;
   setTheme: (key: keyof SiteConfig['theme'], value: string) => void;
   setHero: (key: keyof SiteConfig['hero'], value: string) => void;
   setVault: (key: keyof SiteConfig['vault'], value: string) => void;
   toggleEffect: (key: keyof SiteConfig['effects']) => void;
   applyTheme: (theme: SiteConfig['theme']) => void;
+  publishSections: () => Promise<boolean>;
   reset: () => void;
 }
 
@@ -129,6 +134,7 @@ const SiteConfigContext = createContext<SiteConfigContextValue | null>(null);
 
 export function SiteConfigProvider({ children }: { children: ReactNode }) {
   const [config, setConfig] = useState<SiteConfig>(loadConfig);
+  const [remoteSyncStatus, setRemoteSyncStatus] = useState<RemoteSyncStatus>('idle');
 
   // Persist on every change.
   useEffect(() => {
@@ -138,6 +144,23 @@ export function SiteConfigProvider({ children }: { children: ReactNode }) {
       /* storage may be unavailable — overrides simply won't persist */
     }
   }, [config]);
+
+  // On mount: fetch remote sections and apply them (global state takes precedence).
+  useEffect(() => {
+    if (!REMOTE_ENABLED) return;
+    setRemoteSyncStatus('fetching');
+    fetchRemoteSections().then((remoteSections) => {
+      if (remoteSections) {
+        setConfig((c) => ({
+          ...c,
+          sections: { ...c.sections, ...remoteSections } as SiteConfig['sections'],
+        }));
+        setRemoteSyncStatus('idle');
+      } else {
+        setRemoteSyncStatus('idle');
+      }
+    });
+  }, []);
 
   // Apply theme + effect flags at the document root so every component follows.
   useEffect(() => {
@@ -179,9 +202,28 @@ export function SiteConfigProvider({ children }: { children: ReactNode }) {
 
   const reset = useCallback(() => setConfig(DEFAULT_CONFIG), []);
 
+  const publishSections = useCallback(async (): Promise<boolean> => {
+    setRemoteSyncStatus('publishing');
+    const ok = await publishRemoteSections(config.sections as unknown as Record<string, boolean>);
+    setRemoteSyncStatus(ok ? 'published' : 'error');
+    if (ok) setTimeout(() => setRemoteSyncStatus('idle'), 3000);
+    return ok;
+  }, [config.sections]);
+
   const value = useMemo<SiteConfigContextValue>(
-    () => ({ config, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, reset }),
-    [config, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, reset]
+    () => ({
+      config,
+      remoteSyncStatus,
+      toggleSection,
+      setTheme,
+      setHero,
+      setVault,
+      toggleEffect,
+      applyTheme,
+      publishSections,
+      reset,
+    }),
+    [config, remoteSyncStatus, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, publishSections, reset]
   );
 
   return <SiteConfigContext.Provider value={value}>{children}</SiteConfigContext.Provider>;

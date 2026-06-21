@@ -121,36 +121,26 @@ export default function Contact() {
             {/* Email */}
             <ContactItem
               label="Email"
-              value="hello@saeed.design"
-              href="mailto:hello@saeed.design"
+              value="zrn_sany@yahoo.com"
+              href="mailto:zrn_sany@yahoo.com"
               copied={copied === 'email'}
-              onCopy={() => copyToClipboard('hello@saeed.design', 'email')}
+              onCopy={() => copyToClipboard('zrn_sany@yahoo.com', 'email')}
             />
 
             {/* Phone */}
             <ContactItem
               label="Phone"
-              value="+98 912 000 0000"
-              href="tel:+989120000000"
+              value="09301221816"
+              href="tel:+989301221816"
               copied={copied === 'phone'}
-              onCopy={() => copyToClipboard('+989120000000', 'phone')}
-            />
-
-            {/* LinkedIn */}
-            <ContactItem
-              label="LinkedIn"
-              value="/in/saeed-designer"
-              href="https://linkedin.com"
-              copied={copied === 'linkedin'}
-              onCopy={() => copyToClipboard('https://linkedin.com/in/saeed-designer', 'linkedin')}
-              external
+              onCopy={() => copyToClipboard('09301221816', 'phone')}
             />
           </div>
 
           {/* CTA */}
           <div style={{ marginTop: 'clamp(48px, 6vw, 72px)' }}>
             <a
-              href="mailto:hello@saeed.design"
+              href="mailto:zrn_sany@yahoo.com"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
