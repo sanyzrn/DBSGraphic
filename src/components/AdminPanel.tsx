@@ -4,6 +4,7 @@ import {
   type SectionKey,
   type SiteConfig,
 } from '../config/siteConfig';
+import { REMOTE_ENABLED } from '../config/remoteConfig';
 
 /* ============================================================
    ADMIN PANEL — the Control Room.
@@ -49,7 +50,7 @@ const PANEL = {
 const ADMIN_PASSWORD = 'dbs@2025';
 
 export default function AdminPanel() {
-  const { config, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, reset } =
+  const { config, remoteSyncStatus, toggleSection, setTheme, setHero, setVault, toggleEffect, applyTheme, publishSections, reset } =
     useSiteConfig();
   const [open, setOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -296,6 +297,62 @@ export default function AdminPanel() {
                 <Toggle checked={config.sections[s.key]} onChange={() => toggleSection(s.key)} />
               </Row>
             ))}
+
+            {/* Publish to Web */}
+            <div style={{ padding: '10px 20px 4px' }}>
+              {REMOTE_ENABLED ? (
+                <button
+                  onClick={publishSections}
+                  disabled={remoteSyncStatus === 'publishing' || remoteSyncStatus === 'fetching'}
+                  style={{
+                    width: '100%',
+                    cursor: remoteSyncStatus === 'publishing' ? 'wait' : 'pointer',
+                    background:
+                      remoteSyncStatus === 'published'
+                        ? 'rgba(63,185,80,0.12)'
+                        : remoteSyncStatus === 'error'
+                        ? 'rgba(179,58,43,0.12)'
+                        : 'rgba(166,134,94,0.1)',
+                    border: `1px solid ${
+                      remoteSyncStatus === 'published'
+                        ? 'rgba(63,185,80,0.5)'
+                        : remoteSyncStatus === 'error'
+                        ? 'rgba(179,58,43,0.5)'
+                        : PANEL.bronze
+                    }`,
+                    color:
+                      remoteSyncStatus === 'published'
+                        ? '#3FB950'
+                        : remoteSyncStatus === 'error'
+                        ? '#B33A2B'
+                        : PANEL.bronze,
+                    fontFamily: 'inherit',
+                    fontSize: '9.5px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    padding: '10px 8px',
+                    borderRadius: '3px',
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  {remoteSyncStatus === 'publishing'
+                    ? '⟳  Publishing...'
+                    : remoteSyncStatus === 'fetching'
+                    ? '⟳  Syncing...'
+                    : remoteSyncStatus === 'published'
+                    ? '✓  Published — Live for all visitors'
+                    : remoteSyncStatus === 'error'
+                    ? '✕  Publish failed — retry'
+                    : '↑  Publish Sections to Web'}
+                </button>
+              ) : (
+                <p style={{ fontSize: '8.5px', color: PANEL.mut, letterSpacing: '0.08em', lineHeight: 1.7, margin: 0 }}>
+                  Remote sync not configured. Fill in{' '}
+                  <span style={{ color: PANEL.bronze }}>src/config/remoteConfig.ts</span>{' '}
+                  with JSONBin.io credentials to publish globally.
+                </p>
+              )}
+            </div>
           </Group>
 
           {/* APPEARANCE */}
