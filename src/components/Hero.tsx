@@ -102,9 +102,9 @@ export default function Hero({ onNameTripleClick }: HeroProps) {
             opacity: 0.6,
           }}
         >
-          Designer<br />
-          Builder<br />
-          Problem Solver
+          Graphic Designer<br />
+          Packaging Specialist<br />
+          Web Developer
         </div>
       </div>
 
@@ -123,9 +123,9 @@ export default function Hero({ onNameTripleClick }: HeroProps) {
           lineHeight: '1.8',
         }}
       >
-        <div>Packaging</div>
-        <div>Brand Systems</div>
-        <div>Digital Products</div>
+        <div>Pharmaceutical</div>
+        <div>Branding</div>
+        <div>Web & UI</div>
       </div>
 
       {/* Main hero content */}
@@ -167,7 +167,7 @@ export default function Hero({ onNameTripleClick }: HeroProps) {
             marginBottom: '48px',
           }}
         >
-          Est. 2009 — Senior Designer & Builder
+          Est. 2007 — Graphic Designer & Web Developer
         </div>
 
         {/* Name */}

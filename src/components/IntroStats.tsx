@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 const stats = [
   { value: '16+', label: 'Years of Experience' },
-  { value: '200+', label: 'Projects Delivered' },
+  { value: '10+', label: 'Brands Served' },
   { value: '5', label: 'Disciplines Mastered' },
   { value: '∞', label: 'Iterations Until Right' },
 ];
@@ -103,9 +103,9 @@ export default function IntroStats() {
             maxWidth: '560px',
           }}
         >
-          "I am not a programmer who learned design.{' '}
+          "Transforming ideas into visual masterpieces.{' '}
           <span style={{ color: 'var(--accent)' }}>
-            I am a designer who learned to build systems.
+            From pharmaceutical packaging to pixel-perfect interfaces — creativity and precision in every layer.
           </span>"
         </p>
         <div
@@ -119,7 +119,7 @@ export default function IntroStats() {
             whiteSpace: 'nowrap',
           }}
         >
-          — Saeed, Est. 2009
+          — Saeed Zarrini, Est. 2007
         </div>
       </div>
     </section>

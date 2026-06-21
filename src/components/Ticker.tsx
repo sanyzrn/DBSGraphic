@@ -1,14 +1,16 @@
 const items = [
   'Pharmaceutical Packaging',
-  'Brand Identity Systems',
-  'Product Packaging',
-  'UI/UX Design',
-  'Editorial Design',
-  'WordPress Development',
+  'Brand Identity',
+  'Graphic Design',
   'AI Solutions',
-  'Telegram Bots',
-  'Business Automation',
-  'Web Applications',
+  'Telegram & Bale Bots',
+  'WordPress Development',
+  'React Applications',
+  'UI/UX Design',
+  'Catalog Design',
+  'Art Direction',
+  'Brochure Design',
+  'Visual Systems',
 ];
 
 export default function Ticker() {

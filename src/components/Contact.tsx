@@ -98,7 +98,7 @@ export default function Contact() {
               marginBottom: 'clamp(48px, 7vw, 80px)',
             }}
           >
-            If you're building something that requires the intersection of design excellence and technical capability — let's talk. I work with pharmaceutical companies, product brands, and ambitious digital ventures.
+            Ready to start a project or looking for collaboration? I'm available for remote or part-time work. Whether it's pharmaceutical packaging, brand identity, or a custom website — let's discuss how to create something that works.
           </p>
         </div>
 
