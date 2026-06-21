@@ -59,9 +59,8 @@ const COMMANDS: Record<string, () => string[]> = {
   ],
   contact: () => [
     '',
-    '  EMAIL      hello@saeed.design',
-    '  PHONE      +98 912 000 0000',
-    '  LINKEDIN   /in/saeed-designer',
+    '  EMAIL      zrn_sany@yahoo.com',
+    '  PHONE      09301221816',
     '',
     '  Preferred contact: Email',
     '  Response time:     < 24 hours',
