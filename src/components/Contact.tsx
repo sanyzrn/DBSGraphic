@@ -55,7 +55,7 @@ export default function Contact() {
           whiteSpace: 'nowrap',
         }}
       >
-        TRUST
+        DBS GRAPHIC
       </div>
 
       <div style={{ position: 'relative', zIndex: 1 }}>
@@ -85,7 +85,9 @@ export default function Contact() {
             }}
           >
             Design is how<br />
-            <span style={{ color: 'var(--accent)' }}>trust begins.</span>
+            <span className="serif-accent" style={{ color: 'var(--accent)', fontWeight: 400 }}>
+              trust begins.
+            </span>
           </h2>
 
           <p
@@ -210,7 +212,7 @@ export default function Contact() {
               letterSpacing: '0.08em',
             }}
           >
-            Designing Trust Since 2009
+            Designing Trust Since 2007
           </div>
         </div>
       </div>

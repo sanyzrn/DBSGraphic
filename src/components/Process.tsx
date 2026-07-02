@@ -141,33 +141,25 @@ export default function Process() {
                 paddingTop: '8px',
               }}
             >
-              {/* Number circle */}
+              {/* Oversized index numeral */}
               <div
                 style={{
-                  width: 'clamp(40px, 5vw, 56px)',
-                  height: 'clamp(40px, 5vw, 56px)',
-                  borderRadius: '50%',
-                  border: '1px solid var(--border)',
-                  backgroundColor: 'var(--bg)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  fontFamily: 'Bricolage Grotesque, sans-serif',
+                  fontWeight: 800,
+                  fontSize: 'clamp(30px, 4.5vw, 52px)',
+                  lineHeight: 1,
+                  letterSpacing: '-0.04em',
+                  color: 'var(--accent)',
+                  minWidth: 'clamp(48px, 6vw, 76px)',
+                  textAlign: 'center',
                   flexShrink: 0,
                   position: 'relative',
                   zIndex: 1,
+                  backgroundColor: 'var(--bg)',
+                  paddingBottom: '8px',
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: 'Bricolage Grotesque, sans-serif',
-                    fontWeight: 700,
-                    fontSize: 'clamp(11px, 1.5vw, 13px)',
-                    color: 'var(--accent)',
-                    letterSpacing: '0.05em',
-                  }}
-                >
-                  {step.number}
-                </span>
+                {step.number}
               </div>
 
               {/* Vertical line */}

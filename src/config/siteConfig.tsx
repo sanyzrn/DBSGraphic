@@ -64,15 +64,15 @@ export const DEFAULT_CONFIG: SiteConfig = {
     contact: true,
   },
   theme: {
-    bg: '#F0EDE6',
-    surface: '#E8E4DA',
-    text: '#15140F',
-    accent: '#A6865E',
+    bg: '#F7F5EF',
+    surface: '#EFECE3',
+    text: '#131210',
+    accent: '#E23D0F',
   },
   hero: {
     name: 'SAEED',
-    tagline: 'DESIGNING TRUST',
-    year: 'SINCE 2007',
+    tagline: 'Designing Trust',
+    year: 'Since 2007',
     descriptor:
       'Graphic designer with 16+ years mastering pharmaceutical packaging, brand systems, and web interfaces — from first sketch to production-ready.',
   },
@@ -89,7 +89,7 @@ export const DEFAULT_CONFIG: SiteConfig = {
   },
 };
 
-const STORAGE_KEY = 'dbs.siteConfig.v1';
+const STORAGE_KEY = 'dbs.siteConfig.v2';
 
 /** Deep-merge a stored (possibly partial / outdated) config onto defaults. */
 function mergeConfig(base: SiteConfig, stored: unknown): SiteConfig {
