@@ -19,11 +19,9 @@ export default function Ticker() {
   return (
     <div
       style={{
-        backgroundColor: 'var(--text)',
-        borderTop: '1px solid rgba(244, 242, 237, 0.1)',
-        borderBottom: '1px solid rgba(244, 242, 237, 0.1)',
+        backgroundColor: 'var(--accent)',
         overflow: 'hidden',
-        padding: '14px 0',
+        padding: '16px 0',
         position: 'relative',
         userSelect: 'none',
       }}
@@ -32,7 +30,7 @@ export default function Ticker() {
         style={{
           display: 'flex',
           gap: '0',
-          animation: 'tickerScroll 40s linear infinite',
+          animation: 'tickerScroll 44s linear infinite',
           width: 'max-content',
         }}
       >
@@ -41,20 +39,22 @@ export default function Ticker() {
             key={index}
             style={{
               fontFamily: 'Bricolage Grotesque, sans-serif',
-              fontSize: '12px',
-              fontWeight: 500,
-              letterSpacing: '0.12em',
+              fontSize: 'clamp(13px, 1.6vw, 17px)',
+              fontWeight: 700,
+              letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: 'rgba(244, 242, 237, 0.55)',
               whiteSpace: 'nowrap',
-              padding: '0 32px',
+              padding: '0 28px',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '32px',
+              gap: '28px',
+              color: '#131210',
             }}
           >
-            {item}
-            <span style={{ color: 'var(--accent)', fontSize: '8px', opacity: 0.6 }}>◆</span>
+            <span style={index % 2 === 1 ? { color: '#F7F5EF' } : undefined}>
+              {item}
+            </span>
+            <span style={{ fontSize: '10px', opacity: 0.85 }}>✳</span>
           </span>
         ))}
       </div>
@@ -65,9 +65,9 @@ export default function Ticker() {
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '80px',
+          width: '60px',
           height: '100%',
-          background: 'linear-gradient(to right, var(--text), transparent)',
+          background: 'linear-gradient(to right, var(--accent), transparent)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -77,9 +77,9 @@ export default function Ticker() {
           position: 'absolute',
           top: 0,
           right: 0,
-          width: '80px',
+          width: '60px',
           height: '100%',
-          background: 'linear-gradient(to left, var(--text), transparent)',
+          background: 'linear-gradient(to left, var(--accent), transparent)',
           pointerEvents: 'none',
           zIndex: 1,
         }}

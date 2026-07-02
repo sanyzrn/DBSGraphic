@@ -1,8 +1,22 @@
 import { useState, useEffect } from 'react';
+import { useSiteConfig, type SectionKey } from '../config/siteConfig';
+
+const NAV_ITEMS: { label: string; id: string; section: SectionKey }[] = [
+  { label: 'Vault', id: 'vault', section: 'vault' },
+  { label: 'Archive', id: 'archive', section: 'archive' },
+  { label: 'Lab', id: 'lab', section: 'lab' },
+  { label: 'Process', id: 'process', section: 'process' },
+  { label: 'Trust', id: 'trust', section: 'timeline' },
+  { label: 'Contact', id: 'contact', section: 'contact' },
+];
 
 export default function Navigation() {
+  const { config } = useSiteConfig();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Only link to sections that are actually rendered.
+  const items = NAV_ITEMS.filter((item) => config.sections[item.section]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,7 +45,7 @@ export default function Navigation() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          backgroundColor: scrolled ? 'rgba(240, 237, 230, 0.9)' : 'transparent',
+          backgroundColor: scrolled ? 'rgba(var(--bg-rgb), 0.88)' : 'transparent',
           backdropFilter: scrolled ? 'blur(12px)' : 'none',
           borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
           transition: 'background-color 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease',
@@ -61,17 +75,10 @@ export default function Navigation() {
 
         {/* Desktop nav links */}
         <div
-          className="hidden md:flex items-center gap-7"
+          className="hidden md:flex items-center gap-8"
           style={{ opacity: scrolled ? 1 : 0, transition: 'opacity 0.5s ease' }}
         >
-          {[
-            { label: 'Vault', id: 'vault' },
-            { label: 'Archive', id: 'archive' },
-            { label: 'Lab', id: 'lab' },
-            { label: 'Process', id: 'process' },
-            { label: 'Trust', id: 'trust' },
-            { label: 'Contact', id: 'contact' },
-          ].map((item) => (
+          {items.map((item, i) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
@@ -89,24 +96,24 @@ export default function Navigation() {
                 position: 'relative',
                 opacity: 0.7,
                 transition: 'opacity 0.3s ease',
+                display: 'inline-flex',
+                alignItems: 'baseline',
+                gap: '6px',
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = '1'; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = '0.7'; }}
             >
-              {item.id === 'vault' && (
-                <span
-                  aria-hidden="true"
-                  style={{
-                    display: 'inline-block',
-                    width: '5px',
-                    height: '5px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--classified, #8B1A1A)',
-                    marginRight: '7px',
-                    verticalAlign: 'middle',
-                  }}
-                />
-              )}
+              <span
+                aria-hidden="true"
+                style={{
+                  fontFamily: 'IBM Plex Mono, monospace',
+                  fontSize: '9px',
+                  color: 'var(--accent)',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
               {item.label}
             </button>
           ))}
@@ -170,7 +177,7 @@ export default function Navigation() {
           left: 0,
           right: 0,
           zIndex: 49,
-          backgroundColor: 'rgba(240, 237, 230, 0.97)',
+          backgroundColor: 'rgba(var(--bg-rgb), 0.97)',
           backdropFilter: 'blur(12px)',
           borderBottom: '1px solid var(--border)',
           padding: '24px',
@@ -183,14 +190,7 @@ export default function Navigation() {
           transition: 'opacity 0.3s ease, transform 0.3s ease',
         }}
       >
-        {[
-          { label: 'Vault', id: 'vault' },
-          { label: 'Archive', id: 'archive' },
-          { label: 'Lab', id: 'lab' },
-          { label: 'Process', id: 'process' },
-          { label: 'Trust', id: 'trust' },
-          { label: 'Contact', id: 'contact' },
-        ].map((item) => (
+        {items.map((item, i) => (
           <button
             key={item.id}
             onClick={() => scrollTo(item.id)}
@@ -207,8 +207,21 @@ export default function Navigation() {
               padding: '14px 0',
               textAlign: 'left',
               borderBottom: '1px solid var(--border)',
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '10px',
             }}
           >
+            <span
+              aria-hidden="true"
+              style={{
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '10px',
+                color: 'var(--accent)',
+              }}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
             {item.label}
           </button>
         ))}

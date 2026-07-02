@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 const stats = [
-  { value: '16+', label: 'Years of Experience' },
-  { value: '10+', label: 'Brands Served' },
-  { value: '5', label: 'Disciplines Mastered' },
-  { value: '∞', label: 'Iterations Until Right' },
+  { index: '01', value: '16+', label: 'Years of Experience' },
+  { index: '02', value: '10+', label: 'Brands Served' },
+  { index: '03', value: '5', label: 'Disciplines Mastered' },
+  { index: '04', value: '∞', label: 'Iterations Until Right' },
 ];
 
 export default function IntroStats() {
@@ -29,7 +29,7 @@ export default function IntroStats() {
     <section
       ref={sectionRef}
       style={{
-        backgroundColor: 'var(--surface)',
+        backgroundColor: 'var(--bg)',
         borderBottom: '1px solid var(--border)',
       }}
     >
@@ -37,7 +37,7 @@ export default function IntroStats() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
           borderBottom: '1px solid var(--border)',
         }}
       >
@@ -48,20 +48,33 @@ export default function IntroStats() {
             className="reveal"
             style={{
               transitionDelay: `${index * 80}ms`,
-              padding: 'clamp(24px, 4vw, 40px) clamp(20px, 3vw, 32px)',
+              padding: 'clamp(28px, 4vw, 48px) clamp(20px, 3vw, 36px)',
               borderRight: index < stats.length - 1 ? '1px solid var(--border)' : 'none',
-              textAlign: 'center',
+              textAlign: 'left',
+              position: 'relative',
             }}
           >
             <div
               style={{
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.2em',
+                color: 'var(--accent)',
+                marginBottom: '18px',
+              }}
+            >
+              ({stat.index})
+            </div>
+            <div
+              style={{
                 fontFamily: 'Bricolage Grotesque, sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(36px, 5vw, 56px)',
+                fontSize: 'clamp(44px, 5.5vw, 72px)',
                 lineHeight: 1,
-                letterSpacing: '-0.03em',
+                letterSpacing: '-0.04em',
                 color: 'var(--text)',
-                marginBottom: '8px',
+                marginBottom: '10px',
               }}
             >
               {stat.value}
@@ -82,44 +95,50 @@ export default function IntroStats() {
         ))}
       </div>
 
-      {/* Manifesto line */}
+      {/* Manifesto */}
       <div
         style={{
-          padding: 'clamp(32px, 4vw, 48px) clamp(24px, 6vw, 80px)',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '24px',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          padding: 'clamp(48px, 7vw, 90px) clamp(24px, 6vw, 80px)',
+          maxWidth: '1100px',
         }}
       >
         <p
           style={{
             fontFamily: 'Bricolage Grotesque, sans-serif',
-            fontWeight: 500,
-            fontSize: 'clamp(16px, 2.2vw, 22px)',
-            lineHeight: 1.45,
+            fontWeight: 600,
+            fontSize: 'clamp(22px, 3.4vw, 40px)',
+            lineHeight: 1.3,
+            letterSpacing: '-0.02em',
             color: 'var(--text)',
-            maxWidth: '560px',
           }}
         >
-          "Transforming ideas into visual masterpieces.{' '}
-          <span style={{ color: 'var(--accent)' }}>
-            From pharmaceutical packaging to pixel-perfect interfaces — creativity and precision in every layer.
-          </span>"
+          Transforming ideas into visual masterpieces.{' '}
+          <span className="serif-accent" style={{ color: 'var(--accent)', fontWeight: 400 }}>
+            From pharmaceutical packaging to pixel-perfect interfaces
+          </span>{' '}
+          — creativity and precision in every layer.
         </p>
         <div
           style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '11px',
-            fontWeight: 500,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--muted)',
-            whiteSpace: 'nowrap',
+            marginTop: '32px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
           }}
         >
-          — Saeed Zarrini, Est. 2007
+          <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--accent)' }} />
+          <span
+            style={{
+              fontFamily: 'IBM Plex Mono, monospace',
+              fontSize: '11px',
+              fontWeight: 500,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'var(--muted)',
+            }}
+          >
+            Saeed Zarrini · Est. 2007
+          </span>
         </div>
       </div>
     </section>

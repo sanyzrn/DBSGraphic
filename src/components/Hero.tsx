@@ -230,33 +230,47 @@ export default function Hero({ onNameTripleClick }: HeroProps) {
               'opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s',
           }}
         >
-          <div
-            style={{
-              fontFamily: 'Bricolage Grotesque, sans-serif',
-              fontWeight: 300,
-              fontSize: 'clamp(18px, 4vw, 40px)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--text)',
-              lineHeight: 1.15,
-              textAlign: 'center',
-            }}
-          >
-            <div>{tagline}</div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
+          <div style={{ textAlign: 'center' }}>
+            <div
+              className="serif-accent"
+              style={{
+                fontSize: 'clamp(30px, 6vw, 64px)',
+                color: 'var(--text)',
+                lineHeight: 1.05,
+              }}
+            >
+              {tagline}
+            </div>
+            <div
+              style={{
+                marginTop: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '16px',
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '11px',
+                fontWeight: 500,
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color: 'var(--accent)',
+              }}
+            >
               <div
                 style={{
-                  width: 'clamp(20px, 3vw, 40px)',
+                  width: 'clamp(24px, 4vw, 48px)',
                   height: '1px',
                   backgroundColor: 'var(--accent)',
+                  opacity: 0.6,
                 }}
               />
               <span>{year}</span>
               <div
                 style={{
-                  width: 'clamp(20px, 3vw, 40px)',
+                  width: 'clamp(24px, 4vw, 48px)',
                   height: '1px',
                   backgroundColor: 'var(--accent)',
+                  opacity: 0.6,
                 }}
               />
             </div>
@@ -276,11 +290,12 @@ export default function Hero({ onNameTripleClick }: HeroProps) {
           <p
             style={{
               fontFamily: 'Inter, sans-serif',
-              fontSize: '13px',
+              fontSize: '14px',
               fontWeight: 400,
               color: 'var(--muted)',
-              letterSpacing: '0.06em',
-              maxWidth: '380px',
+              letterSpacing: '0.02em',
+              lineHeight: 1.75,
+              maxWidth: '440px',
             }}
           >
             {descriptor}
